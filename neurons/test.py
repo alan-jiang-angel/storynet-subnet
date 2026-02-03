@@ -1,6 +1,10 @@
 import bittensor as bt
 import asyncio
 import os
+import json
+import random
+
+
 from dotenv import load_dotenv
 from template.protocol import (
     StoryGenerationSynapse, 
@@ -37,9 +41,10 @@ class TestRunner:
         }
         result = await self.generator.generate(input_data)
 
-        generated_content = result.get("generated_content", "")
-        print(f"Generated Content: {generated_content}")
-        return generated_content
+        print("=================response=================")
+        print(result)
+
+        return result
     
     def test_scoring(self, response_json):
         pass
@@ -119,7 +124,7 @@ def evaluate_response(
             "overall": base_score / 100.0
         },
         "parsed": parsed,
-        "raw": response_json
+        # "raw": response_json
     }
 
     if narrative_score is not None:
@@ -128,57 +133,40 @@ def evaluate_response(
 
     return report
 
-
-
 async def main():
     tester = TestRunner()
-    
-    # incoming_synapse = create_blueprint_synapse("A story about human and AI in ethic problems.")
-    
-    # blueprint = await tester.generate_response(incoming_synapse)
-    
-    # incoming_synapse = create_characters_synapse({
-    #     "title": "Sample Story",
-    #     "genre": "Sci-Fi",
-    #     "setting": "Future World",
-    #     "core_conflict": "Human vs AI",
-    #     "themes": ["Technology", "Ethics"],
-    #     "tone": "Suspenseful",
-    #     "target_audience": "Adults"
-    # }, "A story about human and AI in ethic problems.")
-    # await tester.generate_response(incoming_synapse)
-    
-    incoming_synapse = create_story_arc_synapse({
-        "title": "Sample Story",
-        "genre": "Sci-Fi",
-        "setting": "Future World",
-        "core_conflict": "Human vs AI",
-        "themes": ["Technology", "Ethics"],
-        "tone": "Suspenseful",
-        "target_audience": "Adults"
-    }, [
-        {"id": "protagonist", "name": "Hero", "archetype": "Hero"},
-        {"id": "ally", "name": "Ally", "archetype": "Helper"},
-        {"id": "rival", "name": "Rival", "archetype": "Villain"},
-        {"id": "mentor", "name": "Mentor", "archetype": "Sage"},
-        {"id": "wildcard", "name": "Wildcard", "archetype": "Mystery"}
-    ],  "A story about human and AI in ethic problems.")
-    await tester.generate_response(incoming_synapse)
 
+    path = "miner_input-02-02.jsonl"
+    selected = None
+
+    with open(path, "r", encoding="utf-8") as f:
+        for i, line in enumerate(f, 1):
+            # Reservoir sampling
+            if random.randrange(i) == 0:
+                selected = line
+
+    obj = json.loads(selected)
+    data = obj.get("data")
+    
+    task_type = data.get("task_type")
+    if task_type == "blueprint":
+        incoming_synapse = create_blueprint_synapse(data.get("user_input", ""))
+    elif task_type == "characters":
+        incoming_synapse = create_characters_synapse(data.get("blueprint", {}), data.get("user_input", ""))
+    elif task_type == "story_arc":
+        incoming_synapse = create_story_arc_synapse(data.get("blueprint", {}), data.get("characters", []), data.get("user_input", ""))
+    elif task_type == "chapters":
+        incoming_synapse = create_chapters_synapse(data.get("blueprint", {}), data.get("characters", []), data.get("story_arc", []), data.get("chapter_ids", []), data.get("user_input", ""))
+    else:
+        raise ValueError(f"Unknown task type: {task_type}")
+
+    response = await tester.generate_response(incoming_synapse)
+    evaluation = evaluate_response(
+        response,
+        generation_time=1.0,  # Placeholder
+        task_type=task_type
+    )
+    print(json.dumps(evaluation, indent=2))
 
 if __name__ == "__main__":
     asyncio.run(main())
-
-
-# import requests
-
-# url = "http://localhost:11434/api/generate"
-
-# payload = {
-#     "model": "glm-4.7-flash:latest",
-#     "prompt": "Explain transformers in 3 sentences",
-#     "stream": False,
-# }
-
-# r = requests.post(url, json=payload)
-# print(r.json()["response"])
