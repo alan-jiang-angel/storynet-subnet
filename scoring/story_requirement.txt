@@ -1,0 +1,55 @@
+Response:
+    output_data
+    generation_time
+    task_type
+    model_info
+
+
+Score:
+
+Technical Score : 30%
+    - Json Valid : 10 pt
+    - Schema Complete : 10 point
+        blueprint: "themes should exist"
+            themes: [more than 2],
+
+        "characters": should exists
+            "protagonist": x1
+            "ally": x2
+            "rival": x3
+            "mentor": x4
+            "wildcard": x5
+
+        "story_arc": 
+            chapters: should exists, must be array
+            storyProgress should exists, and number
+                first chapter progress should be 0.08
+                chapter 12 should be 1
+
+        "chapters": should exists and array
+            each chapter must have
+                id
+                title
+                content : larger than 1000 charaters
+                choice : array, length is between 2 to 4 (inclusive)
+
+
+    - Response Time
+        < 30s : 10point
+        30~60s : 10 - (time - 30)/3
+        > 60s : 0point
+
+Structure Score : 40%
+    Blueprint: 
+        required fields: "title", "genre", "setting", "core_conflict", "themes", "tone", "target_audience"
+        length of settings should between 50 ~ 300 (+5), 30~500 (+3)
+        length of core_conflict should between 30~200 (+5), 15~300 (+3)
+
+        themes count should be between 2~5 (10), 1~6 (5)
+
+    Characters:
+
+
+Content Score : 40%
+
+Narrative

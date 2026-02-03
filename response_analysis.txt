@@ -1,0 +1,145 @@
+1. BLUEPRINT Request
+Response Format: Structured JSON Dictionary
+
+{
+  "output_data": {
+    "title": "string",
+    "genre": "string",
+    "setting": "string (200-500 characters recommended)",
+    "core_conflict": "string",
+    "themes": ["string", "string", ...],  // 2-5 themes
+    "tone": "string",
+    "target_audience": "string",
+    "generated_text": "string",  // Full narrative blueprint text
+    "format": "text",
+    "task_type": "blueprint"
+  }
+}
+
+Scoring Criteria (40 points max):
+
+- Field completeness (20 pts): Must include all 7 required fields
+- Content length (10 pts): setting 50-300 chars, core_conflict 30-200 chars
+- Themes count (10 pts): 2-5 themes for full points
+
+
+2. CHARACTERS Request
+Response Format: Structured JSON Array
+
+{
+  "output_data": {
+    "characters": [
+      {
+        "id": "string",
+        "name": "string",
+        "archetype": "string",
+        "background": "string",
+        "motivation": "string",
+        "skills": ["string", ...],
+        "personality_traits": ["string", ...],
+        "relationships": {
+          "character_id": "relationship description"
+        }
+      },
+      // ... up to 5 characters
+    ],
+    "generated_text": "string",
+    "format": "text",
+    "task_type": "characters"
+  }
+}
+
+Scoring Criteria (40 points max):
+
+- Character count (20 pts): Exactly 5 characters = full points
+- Character completeness (10 pts): Each character should have all 7 required fields
+- Relationships network (10 pts): Each character needs 2+ relationships defined
+
+
+3. STORY_ARC Request
+Response Format: Structured JSON with 12 Chapters and 4-Act Structure
+
+{
+  "output_data": {
+    "title": "string",
+    "chapters": [
+      {
+        "id": 1,
+        "title": "string",
+        "summary": "string",
+        "storyProgress": 10  // monotonically increasing 0-100
+      },
+      // ... exactly 12 chapters
+    ],
+    "arcs": {
+      "act1": {
+        "chapters": [1, 2, 3],
+        "description": "string"
+      },
+      "act2a": {
+        "chapters": [4, 5, 6],
+        "description": "string"
+      },
+      "act2b": {
+        "chapters": [7, 8, 9],
+        "description": "string"
+      },
+      "act3": {
+        "chapters": [10, 11, 12],
+        "description": "string"
+      }
+    },
+    "generated_text": "string",
+    "format": "text",
+    "task_type": "story_arc"
+  }
+}
+
+Scoring Criteria (40 points max):
+
+- Chapter count (20 pts): Exactly 12 chapters = full points
+- Progress monotonic (10 pts): storyProgress must increase from chapter 1→12
+- 4-act structure (10 pts): Must have act1, act2a, act2b, act3 with 3 chapters each
+
+4. CHAPTERS Request
+Response Format: Full Narrative JSON
+
+{
+  "output_data": {
+    "chapters": [
+      {
+        "id": 1,
+        "content": "string (1000-3000 chars ideal)",
+        "choices": [
+          {
+            "id": 1,
+            "text": "string",
+            "consequences": {
+              "next_chapter": 2,
+              "character_change": "string"
+            }
+          },
+          // 2-4 choices per chapter
+        ]
+      },
+      // ... multiple chapters
+    ],
+    "generated_text": "string",
+    "format": "text",
+    "task_type": "chapters"
+  }
+}
+
+Scoring Criteria (40 points max):
+
+- Content length (20 pts): 1000-3000 chars per chapter = full points
+- Choices quality (10 pts): 2-4 choices per chapter = full points
+- Branch diversity (10 pts): Each choice must have different consequences
+
+---
+
+✅ All responses are JSON - not plain text or markdown
+✅ Task-specific structure - each type has distinct fields
+✅ Scoring-driven design - response structure aligns with what's being evaluated
+✅ Nested relationships - complex data structures for better narrative depth
+✅ Metadata always included - format, task_type, _model_info fields

@@ -28,11 +28,11 @@ try:
 except ImportError:
     OPENAI_AVAILABLE = False
 
-try:
-    import google.generativeai as genai
-    GEMINI_AVAILABLE = True
-except ImportError:
-    GEMINI_AVAILABLE = False
+# try:
+#     import google.generativeai as genai
+#     GEMINI_AVAILABLE = True
+# except ImportError:
+#     GEMINI_AVAILABLE = False
 
 try:
     import httpx
@@ -291,11 +291,77 @@ class LLMGenerator(StoryGenerator):
         prompt = "You are a creative story writer.\n\n"
         prompt += f"User Request: {user_input}\n\n"
 
-        if blueprint:
+        if (input_data.get("task_type") == 'blueprint'):
+            prompt += "Rules: Do not generate duplicated story content with previous requests. Keep it engaging and coherent.\n\n"
+            prompt += "Generate engaging story content with following format:"
+            prompt += """{
+                        "title": "string",
+                        "genre": "string",
+                        "setting": "string (200-500 characters recommended)",
+                        "core_conflict": "string",
+                        "themes": ["string", "string", ...],
+                        "tone": "string",
+                        "target_audience": "string",
+                        "generated_text": "string",
+                    }"""
+            prompt += "Generated story should goes into 'generated_text' field."
+        elif (input_data.get("task_type") == 'characters'):
             prompt += f"Blueprint: {blueprint}\n\n"
+            prompt += "Rules: Do not generate duplicated story content with previous requests. Keep it engaging and coherent.\n\n"
+            prompt += "Generate the story and characters with following format:\n"
+            prompt += "example of charaters are provided below:\n"
+            prompt += """{
+                "characters": [
+                    {"id": "protagonist", "name": "Hero", "archetype": "Hero"}, 
+                    {"id": "ally", "name": "Ally", "archetype": "Helper"}, 
+                    {"id": "rival", "name": "Rival", "archetype": "Villain"}, 
+                    {"id": "mentor", "name": "Mentor", "archetype": "Sage"}, 
+                    {"id": "wildcard", "name": "Wildcard", "archetype": "Mystery"}
+                ],
+                "generated_text": "string",
+            }"""
+            prompt += "generated story should goes into 'generated_text' field."
+        elif (input_data.get("task_type") == 'story_arc'):
+            characters = input_data.get("characters", {})
+            
+            prompt += f"Blueprint: {blueprint}\n\n"
+            prompt += f"Characters: {characters}\n\n"
+            prompt += "Rules: Do not generate duplicated story content with previous requests. Keep it engaging and coherent.\n\n"
+            prompt += "Generate the story arcs with following format: \n"
+            prompt += "Chapters should exactly 12"
 
-        prompt += "Generate engaging story content:"
-
+            prompt += """{
+                "title": "string",
+                "chapters": [
+                {
+                    "id": 1,
+                    "title": "string",
+                    "summary": "string",
+                    "storyProgress": 10  // monotonically increasing 0-100
+                },
+                ],
+                "arcs": {
+                "act1": {
+                    "chapters": [1, 2, 3],
+                    "description": "string"
+                },
+                "act2a": {
+                    "chapters": [4, 5, 6],
+                    "description": "string"
+                },
+                "act2b": {
+                    "chapters": [7, 8, 9],
+                    "description": "string"
+                },
+                "act3": {
+                    "chapters": [10, 11, 12],
+                    "description": "string"
+                }
+                },
+                "generated_text": "string",
+                "format": "text",
+                "task_type": "story_arc"
+            }"""
         return prompt
 
     def get_mode(self) -> str:

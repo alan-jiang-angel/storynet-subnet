@@ -21,6 +21,7 @@ import sys
 import time
 import traceback
 from typing import Dict, Any, Optional, Tuple
+from datetime import datetime
 
 import bittensor as bt
 from dotenv import load_dotenv
@@ -150,7 +151,10 @@ class StoryMiner:
                     "chapter_ids": synapse.chapter_ids,
                     "task_type": synapse.task_type  # Pass task type to generator
                 }
-
+                
+                # TODO: Save to file for debugging
+                save_to_file(input_data)
+                
                 # Use unified generator (supports local models, APIs, etc.)
                 bt.logging.debug(f"Calling generator with task_type: {synapse.task_type}")
                 result = await self.generator.generate(input_data)
@@ -249,6 +253,8 @@ class StoryMiner:
             )
             bt.logging.info(f"📋 Model info set: {synapse.model_info}")
             bt.logging.debug(f"Sending output_data: {type(output_data)} with keys: {output_data.keys() if isinstance(output_data, dict) else 'N/A'}")
+            
+            save_to_file({"output_data": synapse.output_data}, filename="miner_output.jsonl")
 
             # Debug: Check if model_info is included in serialization
             try:
@@ -378,6 +384,16 @@ def get_config():
     config = bt.Config(parser)
 
     return config
+
+
+def save_to_file(data: dict, filename: str = "miner_input.jsonl"):
+    record = {
+        "timestamp": datetime.utcnow().isoformat() + "Z",
+        "data": data
+    }
+
+    with open(filename, "a", encoding="utf-8") as f:
+        f.write(json.dumps(record) + "\n")
 
 
 def main():
