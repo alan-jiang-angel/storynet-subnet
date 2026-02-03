@@ -41,8 +41,8 @@ class TestRunner:
         }
         result = await self.generator.generate(input_data)
 
-        print("=================response=================")
-        print(result)
+        # print("=================response=================")
+        # print(result)
 
         return result
     
@@ -140,15 +140,29 @@ async def main():
     selected = None
 
     with open(path, "r", encoding="utf-8") as f:
-        for i, line in enumerate(f, 1):
-            # Reservoir sampling
-            if random.randrange(i) == 0:
-                selected = line
+        ## Read Random Line
+        # for i, line in enumerate(f, 1):
+        #     # Reservoir sampling
+        #     if random.randrange(i) == 0:
+        #         selected = line
 
-    obj = json.loads(selected)
+        ## Read a speicific line
+        # line_number = 32 # blueprint
+        # line_number = 9 # characters
+        # line_number = 7 # story_arc
+        line_number = 16 # chapters
+        
+        for i, line in enumerate(f):
+            if i == line_number:
+                obj = json.loads(line)
+                break
+
+    # obj = json.loads(selected)
     data = obj.get("data")
     
     task_type = data.get("task_type")
+    print(f"Running test for task type: {task_type}")
+    
     if task_type == "blueprint":
         incoming_synapse = create_blueprint_synapse(data.get("user_input", ""))
     elif task_type == "characters":
@@ -162,7 +176,7 @@ async def main():
 
     response = await tester.generate_response(incoming_synapse)
     evaluation = evaluate_response(
-        response,
+        response["generated_content"],
         generation_time=1.0,  # Placeholder
         task_type=task_type
     )

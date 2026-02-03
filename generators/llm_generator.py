@@ -85,7 +85,7 @@ class LLMGenerator(StoryGenerator):
 
             if OPENAI_AVAILABLE:
                 self.client = AsyncOpenAI(
-                    api_key="not-needed",
+                    api_key=os.getenv("OPENROUTER_API_KEY"),
                     base_url=f"{self.local_url}/v1"
                 )
 
@@ -295,7 +295,7 @@ class LLMGenerator(StoryGenerator):
             - All fields must be present.
             - Infer values from the user_input.
             - "setting" must be between **50 and 300 characters**.
-            - "core_conflict" must be between **20 and 30 characters**.
+            - "core_conflict" must be between **20 and 200 characters**.
             - "themes" must contain **2–5 items**.
             - "generated_text" must be a full narrative blueprint describing the world, premise, stakes, and story direction.
             - "format" must be exactly: "text".
@@ -317,6 +317,10 @@ class LLMGenerator(StoryGenerator):
 
             - If multiple interpretations of user_input exist, select an unusual but plausible angle.
             - Before writing the final output, internally consider several story concepts and choose the most distinctive one.
+
+            - Have the word repetitation ratio to less than 40% from settings and core_conflict
+            - Have the word count more than 100 from settings and core_conflict
+            - Have some duplicated words between user_input and title + genre + setting
 
             ────────────────────────────
             ### VARIATION SEED
@@ -383,6 +387,12 @@ class LLMGenerator(StoryGenerator):
                 - No two characters may share the same archetype.
                 - Each character must differ in worldview, social role, and moral alignment.
                 - At least one relationship must involve rivalry, secrecy, or ideological conflict.
+                
+                - Have the word repetitation ratio to less than 40% from all characters' description
+                - Have the word count more than 100 from all characters' description
+                - Keep the total number of sentences more than 3 and keep the average sentence length to **10-30** words
+                
+                - Have some duplicated words betwee blueprint and characters' description
 
                 ────────────────────────────
                 ### GENERATED_TEXT REQUIREMENTS
@@ -408,20 +418,18 @@ class LLMGenerator(StoryGenerator):
                 3) a list of characters
 
                 Use ALL three sources to design a coherent 12-chapter story outline with a four-act dramatic structure.
-
                 If any sources conflict, prioritize the user_input, then the blueprint, then the characters.
-
                 You MUST return a single valid JSON object in exactly the following format:
 
                 {{
                     "title": "string",
                     "chapters": [
-                        {
+                        {{
                             "id": 1,
                             "title": "string",
                             "summary": "string",
                             "storyProgress": 10
-                        }
+                        }}
                     ],
                     "arcs": {{
                         "act1": {{
@@ -480,6 +488,12 @@ class LLMGenerator(StoryGenerator):
                 - Introduce at least one major surprise in act2b.
                 - Consequences must permanently change relationships or the world.
                 - Each act must feel tonally distinct while staying consistent with the blueprint.
+                
+                - Have the word repetitation ratio to less than 40% from all chapters' description
+                - Have the word count more than 100 from all chapters' description
+                - Keep the total number of sentences more than 3 and keep the average sentence length to **10-30** words
+                
+                - Have some duplicated words between blueprint and description
 
                 ────────────────────────────
                 ### GENERATED_TEXT REQUIREMENTS
@@ -523,6 +537,7 @@ class LLMGenerator(StoryGenerator):
                         {{
                             "id": 1,
                             "content": "string",
+                            "title": "string",
                             "choices": [
                                 {{
                                     "id": 1,
@@ -573,6 +588,11 @@ class LLMGenerator(StoryGenerator):
                 - Avoid repetitive chapter structures.
                 - At least one choice per chapter should be morally difficult or risky.
                 - Different choices must lead to meaningfully different narrative trajectories.
+
+                - Have the word repetitation ratio to less than 40% from content
+                - Have the word count more than 500 from content
+                - Keep the total number of sentences more than 3 and keep the average sentence length to **10-30** words
+                - Have some duplicated words between blueprint and content
 
                 ────────────────────────────
                 ### GENERATED_TEXT REQUIREMENTS

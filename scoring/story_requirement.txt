@@ -48,7 +48,12 @@ Structure Score : 40%
         themes count should be between 2~5 (10), 1~6 (5)
 
     Characters:
+        count should exactly 5
+        required fields: "id", "name", "archetype", "background", "motivation", "skills", "personality_traits"
+        relationship: more than 2
 
+    StoryArc:
+        
 
 Content Score : 40%
 

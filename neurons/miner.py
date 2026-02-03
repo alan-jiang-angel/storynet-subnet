@@ -135,7 +135,7 @@ class StoryMiner:
             Synapse with generated content filled in
         """
         try:
-            bt.logging.info(f"📨 Received {synapse.task_type} request from {synapse.validator_hotkey}")
+            bt.logging.info(f"📨 Received {synapse.task_type} request from {synapse.dendrite.hotkey}")
             bt.logging.debug(f"Input data: user_input='{synapse.user_input[:100]}...', blueprint_keys={list(synapse.blueprint.keys()) if synapse.blueprint else 'None'}, "
                              f"characters_len={len(synapse.characters) if synapse.characters else 0}, "
                              f"story_arc_keys={list(synapse.story_arc.keys()) if synapse.story_arc else 'None'}, "
