@@ -32,3 +32,5 @@ wallets/
 *.log
 logs/
 private/
+
+*.jsonl
