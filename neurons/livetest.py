@@ -2,6 +2,27 @@ import json
 import urllib.request
 import urllib.error
 
+import bittensor as bt
+import asyncio
+import os
+import json
+import random
+
+from dotenv import load_dotenv
+from template.protocol import (
+    StoryGenerationSynapse, 
+    create_blueprint_synapse, 
+    create_characters_synapse, 
+    create_story_arc_synapse, 
+    create_chapters_synapse
+)
+from generators.loader import GeneratorLoader
+
+import json
+from typing import Any, Dict, Optional
+
+load_dotenv()
+
 def send_score_request(req_data: dict, task_type: str) -> dict:
     """
     Send POST request to StoryAI score-miners API using standard library only.
@@ -61,25 +82,69 @@ def send_score_request(req_data: dict, task_type: str) -> dict:
         }
 
 
-# Example usage
-if __name__ == "__main__":
-    path = "miner_output.jsonl"
+class TestRunner:
+    def __init__(self):
+        self.generator = GeneratorLoader()
+        
+    async def generate_response(self, synapse: StoryGenerationSynapse):
+        input_data = {
+            "user_input": synapse.user_input,
+            "blueprint": synapse.blueprint,
+            "characters": synapse.characters,
+            "story_arc": synapse.story_arc,
+            "chapter_ids": synapse.chapter_ids,
+            "task_type": synapse.task_type  # Pass task type to generator
+        }
+        result = await self.generator.generate(input_data)
+
+        return result
+    
+    def test_scoring(self, response_json):
+        pass
+
+
+async def main():
+    tester = TestRunner()
+
+    path = "miner_input-02-02.jsonl"
+
     with open(path, "r", encoding="utf-8") as f:
-        ## Read a speicific line
-        # line_number = 130 # blueprint
-        line_number = 133 # characters
-        # line_number = 135 # story_arc
-        # line_number = 28 # chapters
+        # line_number = 31 # blueprint
+        # line_number = 9 # characters
+        # line_number = 7 # story_arc
+        line_number = 16 # chapters
         
         for i, line in enumerate(f):
             if i == line_number:
                 obj = json.loads(line)
                 break
 
-    # obj = json.loads(selected)
-    
     data = obj.get("data")
-    print(data)
-    result = send_score_request(data, data.get("task_type"))
+    task_type = data.get("task_type")
     
-    print(result)
+    print(f"Running test for task type: {task_type}")
+    
+    if task_type == "blueprint":
+        incoming_synapse = create_blueprint_synapse(data.get("user_input", ""))
+    elif task_type == "characters":
+        incoming_synapse = create_characters_synapse(data.get("blueprint", {}), data.get("user_input", ""))
+    elif task_type == "story_arc":
+        incoming_synapse = create_story_arc_synapse(data.get("blueprint", {}), data.get("characters", []), data.get("user_input", ""))
+    elif task_type == "chapters":
+        incoming_synapse = create_chapters_synapse(data.get("blueprint", {}), data.get("characters", []), data.get("story_arc", []), data.get("chapter_ids", []), data.get("user_input", ""))
+    else:
+        raise ValueError(f"Unknown task type: {task_type}")
+
+    response = await tester.generate_response(incoming_synapse)
+    content = json.loads(response.get("generated_content", "{}"))
+    content["_model_info"] = {"mode": "local", "name": "Qwen/Qwen3-235B-A22B-Instruct-2507-TEE", "version": "", "provider": "vllm", "parameters": {"url": "https://openrouter.ai/api"}}
+    
+    print(json.dumps(response, indent=2))
+    
+    print("Sending scoring request...")    
+    result = send_score_request({ "output_data": content }, task_type)
+    print(json.dumps(result, indent=2))
+    
+
+if __name__ == "__main__":
+    asyncio.run(main())
