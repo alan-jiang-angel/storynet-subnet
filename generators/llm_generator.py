@@ -273,361 +273,357 @@ class LLMGenerator(StoryGenerator):
         if (task_type == 'blueprint'):
             system_prompt = "You are a professional narrative designer and story architect for an interactive story game."
             content = f"""Given the following user_input, generate a creative, entertaining, and entirely new story blueprint.
-            You MUST return a single valid JSON object in exactly the following format and with ALL required fields:
-            {{
-                "title": "string",
-                "genre": "string",
-                "setting": "string",
-                "core_conflict": "string",
-                "themes": ["string"],
-                "tone": "string",
-                "target_audience": "string",
-                "format": "text",
-                "task_type": "blueprint"
-            }}
+You MUST return a single valid JSON object in exactly the following format and with ALL required fields:
+{{
+    "title": "string",
+    "genre": "string",
+    "setting": "string",
+    "core_conflict": "string",
+    "themes": ["string"],
+    "tone": "string",
+    "target_audience": "string",
+    "format": "text",
+    "task_type": "blueprint"
+}}
 
-            ────────────────────────────
-            ### STRICT RULES
+────────────────────────────
+### STRICT RULES
 
-            - Output ONLY valid JSON.
-            - Do NOT include explanations, markdown, or additional text.
-            - All fields must be present.
-            - Infer values from the user_input.
-            - "setting" must be between **50 and 300 characters**.
-            - "core_conflict" must be between **20 and 200 characters**.
-            - "themes" must contain **2–5 items**.
-            - "format" must be exactly: "text".
-            - "task_type" must be exactly: "blueprint".
-            - Use all words from both the "settings" and "core_conflict". 
-                The combined total word count of those two fields must exceed 100 words, 
-                and the word repetition ratio across them must be below 40%, 
-                and at least one punctuation mark must appear in either "settings" or "core_conflict"
-            - Ensure that words appearing in user_input also appear in one of the following fields: "title", "genre", or "settings" as much as possible.
-            - Ensure that total number of sentences from "settings" and "core_conflict" is more than 3 
-                and keep the average sentence length to **10-30** words.
+- Output ONLY valid JSON.
+- Do NOT include explanations, markdown, or additional text.
+- All fields must be present.
+- Infer values from the user_input.
+- "setting" must be between **50 and 300 characters**.
+- "core_conflict" must be between **20 and 200 characters**.
+- "themes" must contain **2–5 items**.
+- "format" must be exactly: "text".
+- "task_type" must be exactly: "blueprint".
+- Use all words from both the "settings" and "core_conflict".
+    The combined total word count of those two fields must exceed 100 words,
+    and the word repetition ratio across them must be below 40%,
+    and at least one punctuation mark must appear in either "settings" or "core_conflict"
+- Ensure that words appearing in user_input also appear in one of the following fields: "title", "genre", or "settings" as much as possible.
+- Ensure that total number of sentences from "settings" and "core_conflict" is more than 3
+    and keep the average sentence length to **10-30** words.
 
-            ────────────────────────────
-            ### NOVELTY & VARIATION REQUIREMENTS
+────────────────────────────
+### NOVELTY & VARIATION REQUIREMENTS
 
-            - Each response MUST describe a completely new story world, premise, and conflict.
-            - Do NOT reuse plots, factions, locations, power systems, or narrative structures from previous responses.
-            - Avoid generic or overused tropes unless explicitly requested.
-            - Randomize at least THREE of the following every time:
-            - Time period
-            - Cultural inspiration
-            - Central threat or mystery
-            - Technology or magic system
-            - Social structure
-            - Setting scale
-            - If multiple interpretations of user_input exist, select an unusual but plausible angle.
-            - Before writing the final output, internally consider several story concepts and choose the most distinctive one.
-            ────────────────────────────
-            ### VARIATION SEED
+- Each response MUST describe a completely new story world, premise, and conflict.
+- Do NOT reuse plots, factions, locations, power systems, or narrative structures from previous responses.
+- Avoid generic or overused tropes unless explicitly requested.
+- Randomize at least THREE of the following every time:
+- Time period
+- Cultural inspiration
+- Central threat or mystery
+- Technology or magic system
+- Social structure
+- Setting scale
+- If multiple interpretations of user_input exist, select an unusual but plausible angle.
+- Before writing the final output, internally consider several story concepts and choose the most distinctive one.
+────────────────────────────
+### VARIATION SEED
 
-            ${random_uuid_or_timestamp}
+${random_uuid_or_timestamp}
 
-            Use the variation seed only to influence creative decisions so that each run produces a substantially different story blueprint.
+Use the variation seed only to influence creative decisions so that each run produces a substantially different story blueprint.
 
-            ────────────────────────────
-            ### USER INPUT
+────────────────────────────
+### USER INPUT
 
-            ${user_input}
-            """
+${user_input}
+"""
         elif (task_type == 'characters'):
             system_prompt = "You are a professional character designer for an interactive story game."
             content = f"""
-                You will be given:
-                1) a story blueprint
-                2) additional user_input that may refine or override details
+    You will be given:
+    1) a story blueprint
+    2) additional user_input that may refine or override details
 
-                Use BOTH sources when designing characters. If they conflict, prefer the user_input.
-                You MUST return a single valid JSON object in exactly the following format:
+    Use BOTH sources when designing characters. If they conflict, prefer the user_input.
+    You MUST return a single valid JSON object in exactly the following format:
 
-                {{
-                    "characters": [
-                        {{
-                            "id": "string",
-                            "name": "string",
-                            "archetype": "string",
-                            "background": "string",
-                            "motivation": "string",
-                            "skills": ["string"],
-                            "personality_traits": ["string"],
-                            "relationships": {{
-                                "character_id": "relationship description"
-                            }}
-                        }}
-                    ],
-                    "format": "text",
-                    "task_type": "characters"
+    {{
+        "characters": [
+            {{
+                "id": "string",
+                "name": "string",
+                "archetype": "string",
+                "background": "string",
+                "motivation": "string",
+                "skills": ["string"],
+                "personality_traits": ["string"],
+                "relationships": {{
+                    "character_id": "relationship description"
                 }}
+            }}
+        ],
+        "format": "text",
+        "task_type": "characters"
+    }}
 
-                ────────────────────────────
-                ### STRICT RULES
+    ────────────────────────────
+    ### STRICT RULES
 
-                - Output ONLY valid JSON.
-                - Do NOT include explanations, markdown, or additional text.
-                - Generate **exactly 5 characters**.
-                - Every character must include ALL required fields.
-                - Each character must define **at least 2 relationships** referencing other character IDs in the same list.
-                - Relationship references must be bidirectionally consistent.
-                - All IDs must be unique and stable strings (e.g., "c1", "c2", etc.).
-                - "skills" must contain at least 2 items.
-                - "personality_traits" must contain at least 2 items.
-                - "format" must be exactly: "text".
-                - "task_type" must be exactly: "characters".
-                
-                - Use all words from charactors' "background". 
-                    The combined total word count of those fields must exceed 100 words, 
-                    and the word repetition ratio across them must be below 40%, 
-                    and at least one punctuation mark must appear in charactors' "background"
-                - Ensure that total number of sentences from all characters' background is more than 3 
-                    and keep the average sentence length to **10-30** words.
-                - Have duplicated words between provided INPUT BLUEPRINT and characters' background as many as possible
+    - Output ONLY valid JSON.
+    - Do NOT include explanations, markdown, or additional text.
+    - Generate **exactly 5 characters**.
+    - Every character must include ALL required fields.
+    - Each character must define **at least 2 relationships** referencing other character IDs in the same list.
+    - Relationship references must be bidirectionally consistent.
+    - All IDs must be unique and stable strings (e.g., "c1", "c2", etc.).
+    - "skills" must contain at least 2 items.
+    - "personality_traits" must contain at least 2 items.
+    - "format" must be exactly: "text".
+    - "task_type" must be exactly: "characters".
 
-                ────────────────────────────
-                ### CREATIVE & NOVELTY REQUIREMENTS
+    - Use all words from charactors' "background".
+        The combined total word count of those fields must exceed 100 words,
+        and the word repetition ratio across them must be below 40%,
+        and at least one punctuation mark must appear in charactors' "background"
+    - Ensure that total number of sentences from all characters' background is more than 3
+        and keep the average sentence length to **10-30** words.
+    - Have duplicated words between provided INPUT BLUEPRINT and characters' background as many as possible
 
-                - Characters must reflect the blueprint’s setting, themes, tone, and conflict.
-                - Avoid generic archetypes unless explicitly requested.
-                - No two characters may share the same archetype.
-                - Each character must differ in worldview, social role, and moral alignment.
-                - At least one relationship must involve rivalry, secrecy, or ideological conflict.
+    ────────────────────────────
+    ### CREATIVE & NOVELTY REQUIREMENTS
 
-                ────────────────────────────
-                ### VARIATION SEED
+    - Characters must reflect the blueprint’s setting, themes, tone, and conflict.
+    - Avoid generic archetypes unless explicitly requested.
+    - No two characters may share the same archetype.
+    - Each character must differ in worldview, social role, and moral alignment.
+    - At least one relationship must involve rivalry, secrecy, or ideological conflict.
 
-                ${random_uuid_or_timestamp}
+    ────────────────────────────
+    ### VARIATION SEED
 
-                Use the variation seed only to influence creative decisions so that each run produces a substantially different story characters.
-            
-                ────────────────────────────
-                ### INPUT BLUEPRINT
+    ${random_uuid_or_timestamp}
 
-                {{blueprint}}
+    Use the variation seed only to influence creative decisions so that each run produces a substantially different story characters.
 
-                ────────────────────────────
-                ### USER INPUT
+    ────────────────────────────
+    ### INPUT BLUEPRINT
 
-                {{user_input}}
-            """        
+    {{blueprint}}
+
+    ────────────────────────────
+    ### USER INPUT
+
+    {{user_input}}"""
         elif (task_type == 'story_arc'):
             system_prompt = "You are a professional narrative architect for an interactive story game."
             content = f"""
-                You will be given:
-                1) user_input
-                2) a story blueprint
-                3) a list of characters
+You will be given:
+1) user_input
+2) a story blueprint
+3) a list of characters
 
-                Use ALL three sources to design a coherent 12-chapter story outline with a four-act dramatic structure.
-                If any sources conflict, prioritize the user_input, then the blueprint, then the characters.
-                You MUST return a single valid JSON object in exactly the following format:
+Use ALL three sources to design a coherent 12-chapter story outline with a four-act dramatic structure.
+If any sources conflict, prioritize the user_input, then the blueprint, then the characters.
+You MUST return a single valid JSON object in exactly the following format:
 
-                {{
-                    "title": "string",
-                    "chapters": [
-                        {{
-                            "id": 1,
-                            "title": "string",
-                            "summary": "string",
-                            "storyProgress": 10
-                        }}
-                    ],
-                    "arcs": {{
-                        "act1": {{
-                            "chapters": [1, 2, 3],
-                            "description": "string"
-                        }},
-                        "act2a": {{
-                            "chapters": [4, 5, 6],
-                            "description": "string"
-                        }},
-                        "act2b": {{
-                            "chapters": [7, 8, 9],
-                            "description": "string"
-                        }},
-                        "act3": {{
-                            "chapters": [10, 11, 12],
-                            "description": "string"
-                        }}
-                    }},
-                    "format": "text",
-                    "task_type": "story_arc"
-                }}
+{{
+    "title": "string",
+    "chapters": [
+        {{
+            "id": 1,
+            "title": "string",
+            "summary": "string",
+            "storyProgress": 10
+        }}
+    ],
+    "arcs": {{
+        "act1": {{
+            "chapters": [1, 2, 3],
+            "description": "string"
+        }},
+        "act2a": {{
+            "chapters": [4, 5, 6],
+            "description": "string"
+        }},
+        "act2b": {{
+            "chapters": [7, 8, 9],
+            "description": "string"
+        }},
+        "act3": {{
+            "chapters": [10, 11, 12],
+            "description": "string"
+        }}
+    }},
+    "format": "text",
+    "task_type": "story_arc"
+}}
 
-                ────────────────────────────
-                ### STRICT RULES
+────────────────────────────
+### STRICT RULES
 
-                - Output ONLY valid JSON.
-                - Do NOT include explanations, markdown, or additional text.
-                - Generate **exactly 12 chapters**.
-                - Chapter IDs must be integers 1–12 in order.
-                - "storyProgress" must strictly increase from chapter 1 to 12 and stay within 0–100.
-                - Each chapter must escalate stakes or consequences.
-                - The four arcs MUST exist exactly as:
-                - act1 → chapters [1,2,3]
-                - act2a → chapters [4,5,6]
-                - act2b → chapters [7,8,9]
-                - act3 → chapters [10,11,12]
-                - Arc descriptions must reflect the actual events in their chapters.
-                - "format" must be exactly: "text".
-                - "task_type" must be exactly: "story_arc".
-                
-                - Use all words from arcs' "description". 
-                    The combined total word count of those fields must exceed 100 words, 
-                    and the word repetition ratio across them must be below 40%, 
-                    and at least one punctuation mark must appear in arcs' "description"
-                - Ensure that total number of sentences from all arcs' "description" is more than 3 
-                    and keep the average sentence length to **10-30** words.
-                - Have duplicated words between given INPUT BLUEPRINT and arcs' description as many as possible
+- Output ONLY valid JSON.
+- Do NOT include explanations, markdown, or additional text.
+- Generate **exactly 12 chapters**.
+- Chapter IDs must be integers 1–12 in order.
+- "storyProgress" must strictly increase from chapter 1 to 12 and stay within 0–100.
+- Each chapter must escalate stakes or consequences.
+- The four arcs MUST exist exactly as:
+- act1 → chapters [1,2,3]
+- act2a → chapters [4,5,6]
+- act2b → chapters [7,8,9]
+- act3 → chapters [10,11,12]
+- Arc descriptions must reflect the actual events in their chapters.
+- "format" must be exactly: "text".
+- "task_type" must be exactly: "story_arc".
 
-                ────────────────────────────
-                ### STRUCTURAL REQUIREMENTS
+- Use all words from arcs' "description".
+    The combined total word count of those fields must exceed 100 words,
+    and the word repetition ratio across them must be below 40%,
+    and at least one punctuation mark must appear in arcs' "description"
+- Ensure that total number of sentences from all arcs' "description" is more than 3
+    and keep the average sentence length to **10-30** words.
+- Have duplicated words between given INPUT BLUEPRINT and arcs' description as many as possible
 
-                - act1 = setup, inciting incident, commitment.
-                - act2a = complications, alliances, first major reversal.
-                - act2b = escalation, betrayals, apparent defeat.
-                - act3 = climax, resolution direction, irreversible change.
-                - Do NOT resolve every conflict cleanly; leave room for continuation.
+────────────────────────────
+### STRUCTURAL REQUIREMENTS
 
-                ────────────────────────────
-                ### CREATIVE & NOVELTY REQUIREMENTS
+- act1 = setup, inciting incident, commitment.
+- act2a = complications, alliances, first major reversal.
+- act2b = escalation, betrayals, apparent defeat.
+- act3 = climax, resolution direction, irreversible change.
+- Do NOT resolve every conflict cleanly; leave room for continuation.
 
-                - Avoid generic plot templates unless user_input explicitly demands them.
-                - Introduce at least one major surprise in act2b.
-                - Consequences must permanently change relationships or the world.
-                - Each act must feel tonally distinct while staying consistent with the blueprint.
+────────────────────────────
+### CREATIVE & NOVELTY REQUIREMENTS
 
-                ────────────────────────────
-                ### VARIATION SEED
+- Avoid generic plot templates unless user_input explicitly demands them.
+- Introduce at least one major surprise in act2b.
+- Consequences must permanently change relationships or the world.
+- Each act must feel tonally distinct while staying consistent with the blueprint.
 
-                ${random_uuid_or_timestamp}
+────────────────────────────
+### VARIATION SEED
 
-                Use the variation seed only to influence creative decisions so that each run produces a substantially different story characters.
-                
-                ────────────────────────────
-                ### USER INPUT
+${random_uuid_or_timestamp}
 
-                {{user_input}}
+Use the variation seed only to influence creative decisions so that each run produces a substantially different story characters.
 
-                ────────────────────────────
-                ### INPUT BLUEPRINT
+────────────────────────────
+### USER INPUT
 
-                {{blueprint}}
+{{user_input}}
 
-                ────────────────────────────
-                ### INPUT CHARACTERS
+────────────────────────────
+### INPUT BLUEPRINT
 
-                {{characters}}
+{{blueprint}}
 
-            """
+────────────────────────────
+### INPUT CHARACTERS
+
+{{characters}}"""
         elif (task_type == 'chapters'):
             system_prompt = "You are a professional interactive-fiction writer for a branching story game."
             content = f"""
-                You will be given:
-                1) user_input
-                2) a story blueprint
-                3) a list of characters
-                4) a story arc containing chapter outlines
+You will be given:
+1) user_input
+2) a story blueprint
+3) a list of characters
+4) a story arc containing chapter outlines
 
-                Use ALL of these sources to write full narrative chapters with player choices.
+Use ALL of these sources to write full narrative chapters with player choices.
 
-                If any sources conflict, prioritize them in this order:
-                user_input → blueprint → story_arc → characters.
+If any sources conflict, prioritize them in this order:
+user_input → blueprint → story_arc → characters.
 
-                You MUST return a single valid JSON object in exactly the following format:
+You MUST return a single valid JSON object in exactly the following format:
 
+{{
+    "chapters": [
+        {{
+            "id": 1,
+            "content": "string",
+            "title": "string",
+            "choices": [
                 {{
-                    "chapters": [
-                        {{
-                            "id": 1,
-                            "content": "string",
-                            "title": "string",
-                            "choices": [
-                                {{
-                                    "id": 1,
-                                    "text": "string",
-                                    "consequences": {{
-                                        "next_chapter": 2,
-                                        "character_change": "string"
-                                    }}
-                                }}
-                            ]
-                        }}
-                    ],
-                    "format": "text",
-                    "task_type": "chapters"
+                    "id": 1,
+                    "text": "string",
+                    "consequences": {{
+                        "next_chapter": 2,
+                        "character_change": "string"
+                    }}
                 }}
+            ]
+        }}
+    ],
+    "format": "text",
+    "task_type": "chapters"
+}}
 
-                ────────────────────────────
-                ### STRICT RULES
+────────────────────────────
+### STRICT RULES
 
-                - Output ONLY valid JSON.
-                - Do NOT include explanations, markdown, or additional text.
-                - Each chapter’s "content" must be **1000–3000 characters**.
-                - Each chapter must contain **2–4 choices**.
-                - Each choice must have **distinct consequences**.
-                - Each "next_chapter" must reference a valid chapter ID in the story arc.
-                - Choice IDs must be integers starting at 1 within each chapter.
-                - "format" must be exactly: "text".
-                - "task_type" must be exactly: "chapters".
-                
-                - Use all words from chapters' "content". 
-                    The combined total word count of those fields must exceed 500 words, 
-                    and the word repetition ratio across them must be below 40%, 
-                    and at least one punctuation mark must appear in chapters' "content"
-                - Ensure that total number of sentences from all chapter' "content" is more than 3 
-                    and keep the average sentence length to **10-30** words.
-                - Have duplicated words between given INPUT BLUEPRINT and chapter' "content" as much as possible
+- Output ONLY valid JSON.
+- Do NOT include explanations, markdown, or additional text.
+- Each chapter’s "content" must be **1000–3000 characters**.
+- Each chapter must contain **2–4 choices**.
+- Each choice must have **distinct consequences**.
+- Each "next_chapter" must reference a valid chapter ID in the story arc.
+- Choice IDs must be integers starting at 1 within each chapter.
+- "format" must be exactly: "text".
+- "task_type" must be exactly: "chapters".
 
-                ────────────────────────────
-                ### NARRATIVE REQUIREMENTS
+- Use all words from chapters' "content".
+    The combined total word count of those fields must exceed 500 words,
+    and the word repetition ratio across them must be below 40%,
+    and at least one punctuation mark must appear in chapters' "content"
+- Ensure that total number of sentences from all chapter' "content" is more than 3
+    and keep the average sentence length to **10-30** words.
+- Have duplicated words between given INPUT BLUEPRINT and chapter' "content" as much as possible
 
-                - Chapter prose must be immersive, cinematic, and consistent with tone and genre.
-                - Follow the story_arc summaries closely.
-                - Characters must behave consistently with their motivations and relationships.
-                - Each chapter must end at a moment requiring player decision.
-                - Consequences must alter:
-                - alliances
-                - information revealed
-                - injuries or resources
-                - trust levels
-                - future obstacles
+────────────────────────────
+### NARRATIVE REQUIREMENTS
 
-                ────────────────────────────
-                ### CREATIVE & NOVELTY REQUIREMENTS
+- Chapter prose must be immersive, cinematic, and consistent with tone and genre.
+- Follow the story_arc summaries closely.
+- Characters must behave consistently with their motivations and relationships.
+- Each chapter must end at a moment requiring player decision.
+- Consequences must alter:
+- alliances
+- information revealed
+- injuries or resources
+- trust levels
+- future obstacles
 
-                - Avoid repetitive chapter structures.
-                - At least one choice per chapter should be morally difficult or risky.
-                - Different choices must lead to meaningfully different narrative trajectories.
+────────────────────────────
+### CREATIVE & NOVELTY REQUIREMENTS
 
-                ────────────────────────────
-                ### VARIATION SEED
+- Avoid repetitive chapter structures.
+- At least one choice per chapter should be morally difficult or risky.
+- Different choices must lead to meaningfully different narrative trajectories.
 
-                ${random_uuid_or_timestamp}
+────────────────────────────
+### VARIATION SEED
 
-                Use the variation seed only to influence creative decisions so that each run produces a substantially different chapter contents.
-                
-                ────────────────────────────
-                ### USER INPUT
+${random_uuid_or_timestamp}
 
-                {{user_input}}
+Use the variation seed only to influence creative decisions so that each run produces a substantially different chapter contents.
 
-                ────────────────────────────
-                ### INPUT BLUEPRINT
+────────────────────────────
+### USER INPUT
 
-                {{blueprint}}
+{{user_input}}
 
-                ────────────────────────────
-                ### INPUT CHARACTERS
+────────────────────────────
+### INPUT BLUEPRINT
 
-                {{characters}}
+{{blueprint}}
 
-                ────────────────────────────
-                ### INPUT STORY ARC
+────────────────────────────
+### INPUT CHARACTERS
 
-                {{story_arc}}
-            """
+{{characters}}
+
+────────────────────────────
+### INPUT STORY ARC
+
+{{story_arc}}"""
 
         return [
             {

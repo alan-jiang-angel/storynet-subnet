@@ -147,8 +147,8 @@ async def main():
         #         selected = line
 
         ## Read a speicific line
-        # line_number = 31 # blueprint
-        line_number = 9 # characters
+        line_number = 31 # blueprint
+        # line_number = 9 # characters
         # line_number = 7 # story_arc
         # line_number = 16 # chapters
         

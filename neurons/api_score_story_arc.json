@@ -1,0 +1,145 @@
+# Story_Arc Request
+
+{
+    "title": "The Fractured Sky",
+    "chapters": [
+      {
+        "id": 1,
+        "title": "The Calm Before the Storm",
+        "summary": "In the high-altitude city of Aerilon, where skyships drift between floating islands, seventeen-year-old Kira Veln discovers an ancient artifact buried beneath her family's archive\u2014a pulsating crystal emitting forbidden energy signatures.",
+        "storyProgress": 8
+      },
+      {
+        "id": 2,
+        "title": "Echoes of the Fallen",
+        "summary": "Kira learns the crystal is tied to the lost Skywarden Order, mythical guardians who vanished a century ago during the Cataclysm that shattered the world below. Her mentor, the reclusive Archivist Dain, warns her to destroy it.",
+        "storyProgress": 16
+      },
+      {
+        "id": 3,
+        "title": "The Spark Ignites",
+        "summary": "When Enforcers raid the archive searching for rogue tech, Kira activates the crystal to escape\u2014triggering a city-wide blackout and awakening dormant mechanisms across Aerilon. She flees with Dain, now marked as a fugitive.",
+        "storyProgress": 24
+      },
+      {
+        "id": 4,
+        "title": "Beneath the Cloudline",
+        "summary": "Kira and Dain descend to the ruined surface world beneath the clouds, seeking the fabled Skywarden Vault. They are rescued by Renn, a scavenger with a mechanical arm and a grudge against Aerilon's elite.",
+        "storyProgress": 32
+      },
+      {
+        "id": 5,
+        "title": "Alliances and Ash",
+        "summary": "The trio reaches the Vault, only to find it already breached. Inside, holograms reveal the Skywardens didn\u2019t vanish\u2014they were betrayed by Aerilon\u2019s founders to seize control of the sky platforms.",
+        "storyProgress": 40
+      },
+      {
+        "id": 6,
+        "title": "The First Betrayal",
+        "summary": "Dain collapses, revealing he was once a Skywarden apprentice who fled during the purge. He warns that the crystal is a key\u2014one of three\u2014to the Celestial Engine, a device capable of reshaping gravity itself.",
+        "storyProgress": 48
+      },
+      {
+        "id": 7,
+        "title": "Fractured Trust",
+        "summary": "Renn accuses Kira of using him to find the Vault. Tensions rise as Enforcer skyships appear overhead, led by Commander Vex, Dain\u2019s former prot\u00e9g\u00e9 and now zealot of the Aerilon regime.",
+        "storyProgress": 56
+      },
+      {
+        "id": 8,
+        "title": "The Hollow Prophet",
+        "summary": "Vex captures Dain and broadcasts a message: the crystal is a weapon of mass destruction. Meanwhile, Kira begins hearing a voice from the crystal\u2014soft, melodic, and eerily familiar.",
+        "storyProgress": 64
+      },
+      {
+        "id": 9,
+        "title": "The Sky Falls",
+        "summary": "A massive platform breaks loose from Aerilon and crashes into the surface, killing thousands. The people blame Kira. In despair, she nearly destroys the crystal\u2014until the voice reveals it is her mother, preserved in the network.",
+        "storyProgress": 72
+      },
+      {
+        "id": 10,
+        "title": "Ascent of the Lost",
+        "summary": "Kira, Renn, and a revived Dain infiltrate Aerilon during a solar storm. They rally underground rebels and hack into the central spire, uncovering blueprints for the Celestial Engine beneath the city\u2019s core.",
+        "storyProgress": 80
+      },
+      {
+        "id": 11,
+        "title": "The Engine Awakens",
+        "summary": "Vex activates the Engine prematurely, aiming to elevate Aerilon beyond reach of the surface. Kira confronts him in the core chamber, using the crystal to disrupt the system\u2014but at the cost of destabilizing the entire city.",
+        "storyProgress": 90
+      },
+      {
+        "id": 12,
+        "title": "A New Horizon",
+        "summary": "Aerilon begins to descend as gravity fluctuates. Kira chooses not to destroy the Engine but to recalibrate it, merging her mother\u2019s consciousness with its core. The sky and surface begin to reconnect. Kira vanishes into the network, leaving Renn and Dain to rebuild.",
+        "storyProgress": 100
+      }
+    ],
+    "arcs": {
+      "act1": {
+        "chapters": [
+          1,
+          2,
+          3
+        ],
+        "description": "The story begins in the floating city of Aerilon, where Kira uncovers a mysterious crystal tied to a lost order of guardians. Her discovery disrupts the fragile peace, revealing hidden truths about the Cataclysm. Forced to flee after a confrontation with Enforcers, she steps into a world far larger than she imagined, leaving safety behind. This act establishes the core mystery and sets her on an irreversible path."
+      },
+      "act2a": {
+        "chapters": [
+          4,
+          5,
+          6
+        ],
+        "description": "Kira, guided by Dain and joined by Renn, ventures beneath the clouds into the ruined world. Their search for the Skywarden Vault uncovers a dark betrayal: the founders of Aerilon destroyed the guardians to monopolize sky platforms. Dain's past is revealed, adding emotional weight and moral complexity. The crystal's true purpose as a key to a gravity-altering engine begins to unfold, raising the stakes beyond survival to the fate of two worlds."
+      },
+      "act2b": {
+        "chapters": [
+          7,
+          8,
+          9
+        ],
+        "description": "Tensions fracture the alliance as Renn feels manipulated, and Dain is captured by Commander Vex, who twists the truth to paint Kira as a destroyer. A massive platform falls from the sky, killing innocents and turning public opinion against her. In her lowest moment, Kira discovers the crystal holds her long-dead mother's consciousness\u2014a revelation that redefines her mission. This twist shifts the narrative from rebellion to reconciliation, introducing a deeply personal dimension to the cosmic conflict."
+      },
+      "act3": {
+        "chapters": [
+          10,
+          11,
+          12
+        ],
+        "description": "The final act sees Kira leading a rebellion to stop Vex from activating the Celestial Engine and abandoning the surface forever. In a climactic confrontation, she prevents total destruction but cannot save Aerilon's old form. Choosing unity over power, she merges her mother with the Engine, beginning a slow reunification of sky and earth. Kira's sacrifice\u2014vanishing into the system\u2014marks an irreversible change, leaving a world forever altered by truth, loss, and fragile hope."
+      }
+    },
+    "format": "text",
+    "task_type": "story_arc"
+  }
+
+
+Score: 
+[
+    {
+        "uid": 115,
+        "score": 0.6766666666666666,
+        "breakdown": {
+            "technical": 18.333333333333332,
+            "structure": 30.0,
+            "content": 3.333333333333333,
+            "narrative": 16.0,
+            "total": 0.6766666666666666,
+            "base_score": 67.66666666666666,
+            "model_quality": {
+                "mode_multiplier": 0.01,
+                "model_bonus": 1.0,
+                "penalty": 1.0,
+                "final_multiplier": 0.01
+            },
+            "extensions": {
+                "applied": false,
+                "multiplier": 1.0,
+                "internal_bonus": 0.0
+            },
+            "final_score": 0.6766666666666666
+        },
+        "timestamp": 1770194333.7563756
+    }
+]

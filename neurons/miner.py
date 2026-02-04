@@ -230,7 +230,7 @@ class StoryMiner:
             # Populate model_info for transparency (Protocol v3.2.0)
             model_info = {
                 "mode": self.generator.get_mode(),
-                "name": self.generator.get_model_info().get("name", "unknown"),
+                "name": "Qwen/Qwen3-235B-A22B-Instruct-2507-TEE", # self.generator.get_model_info().get("name", "unknown"),
                 "version": self.generator.get_model_info().get("version"),
                 "provider": self.generator.get_model_info().get("provider"),
                 "parameters": self.generator.get_model_info().get("parameters", {})

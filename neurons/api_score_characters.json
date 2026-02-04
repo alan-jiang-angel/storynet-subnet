@@ -1,0 +1,132 @@
+{
+    "characters": [
+      {
+        "id": "c1",
+        "name": "Kaelen Voss",
+        "archetype": "disillusioned tactician",
+        "background": "Once a decorated general in the Northern Coalition, Kaelen abandoned his post after the Siege of Varnhold, where he was forced to sacrifice an entire battalion to maintain a strategic advantage. He now lives under an alias in the slums of Drenmar, selling outdated military schematics to survive. His left hand trembles when stressed, a nervous condition developed during prolonged exposure to warzone stimulants. He drinks blackroot tea every evening to calm his nerves, a habit picked up from a field medic who saved his life.",
+        "motivation": "To dismantle the military-industrial complex that turned soldiers into disposable assets",
+        "skills": [
+          "strategic warfare",
+          "covert infiltration",
+          "psychological manipulation"
+        ],
+        "personality_traits": [
+          "calculating",
+          "morally conflicted"
+        ],
+        "relationships": {
+          "c2": "Former mentor and now ideological rival; Kaelen blames Rhis for promoting the doctrines he now opposes.",
+          "c4": "Secretly protects her from coalition agents, though she doesn't know his true identity."
+        }
+      },
+      {
+        "id": "c2",
+        "name": "Rhis Taryn",
+        "archetype": "ruthless visionary",
+        "background": "As the current High Strategist of the Northern Coalition, Rhis engineered the campaign that won the Riverlands but at a devastating human cost. Orphaned during the Collapse, he rose through merit and an uncanny ability to predict enemy movements. He believes stability justifies any sacrifice and sees dissent as a disease. His private journals, locked in a vault beneath Coalition HQ, reveal insomnia and frequent nightmares about faceless soldiers screaming in unison. He once ordered Kaelen to carry out the Varnhold purge, a decision that still haunts his dreams, though he'd never admit it.",
+        "motivation": "To unify the fractured territories under absolute order, no matter the cost",
+        "skills": [
+          "grand strategy",
+          "political coercion"
+        ],
+        "personality_traits": [
+          "disciplined",
+          "emotionally detached"
+        ],
+        "relationships": {
+          "c1": "Views Kaelen as a brilliant but broken idealist who failed to grasp the burden of command.",
+          "c3": "Employs her as an enforcer; trusts her loyalty more than any officer's."
+        }
+      },
+      {
+        "id": "c3",
+        "name": "Mireya the Red",
+        "archetype": "fanatical enforcer",
+        "background": "A former gladiator from the Sunken Pits of Korr, Mireya was recruited by Rhis after she killed seven opponents in a single match using only a rusted cleaver. She bears a scar across her throat from a near-fatal injury that left her voice permanently hoarse. Now the head of internal security for the Coalition, she hunts deserters and rebels with terrifying efficiency. She keeps a journal written in blood-ink, detailing every target she's eliminated. Despite her brutality, she fiercely protects a blind girl in her childhood slum district, sending her money anonymously each month.",
+        "motivation": "To prove that strength alone determines worth, and she is the strongest",
+        "skills": [
+          "close-quarters combat",
+          "interrogation techniques"
+        ],
+        "personality_traits": [
+          "intimidating",
+          "secretly compassionate"
+        ],
+        "relationships": {
+          "c2": "Loyal to Rhis not out of ideology, but because he gave her purpose when no one else would.",
+          "c5": "Seeks to capture him after he exposed her side dealings with black-market arms dealers."
+        }
+      },
+      {
+        "id": "c4",
+        "name": "Elion Pasca",
+        "archetype": "curious street scholar",
+        "background": "Orphaned at ten when his parents were executed for distributing banned histories, Elion grew up in the underground archives of Drenmar, memorizing forbidden texts and decoding encrypted manuscripts. He has a photographic memory and can recite entire volumes from memory, though he stutters when anxious. At sixteen, he uncovered evidence of a secret project called 'Echo Protocol,' which the Coalition tried to erase. Now hunted, he hides in plain sight as a scribe\u2019s apprentice. He unknowingly possesses a key to Rhis\u2019s downfall, encoded in a lullaby his mother used to sing.",
+        "motivation": "To expose the truth that powerful institutions work to erase",
+        "skills": [
+          "decoding ciphers",
+          "historical analysis"
+        ],
+        "personality_traits": [
+          "inquisitive",
+          "anxious"
+        ],
+        "relationships": {
+          "c1": "Unaware of Kaelen\u2019s protection, but admires the anonymous informant who keeps him safe.",
+          "c5": "Collaborates with him to decrypt the final pieces of the Echo Protocol."
+        }
+      },
+      {
+        "id": "c5",
+        "name": "Dorran Vale",
+        "archetype": "cynical inventor",
+        "background": "A disgraced bioengineer, Dorran designed the neural inhibitors used to control war prisoners until he discovered they were being tested on civilians. He faked his death and now operates from a hidden lab beneath an abandoned bathhouse. He suffers from chronic pain due to an experimental implant he tested on himself. His inventions include a memory-extracting device and a prototype cloaking suit made from repurposed surveillance fabric. He sells tech to rebels and criminals alike, not out of idealism, but because the Coalition ruined his reputation. He talks to a mannequin named 'Livia,' pretending she\u2019s his deceased sister.",
+        "motivation": "To undermine the system that exploited his genius while avoiding redemption",
+        "skills": [
+          "bioengineering",
+          "mechanical improvisation"
+        ],
+        "personality_traits": [
+          "sarcastic",
+          "emotionally isolated"
+        ],
+        "relationships": {
+          "c3": "Wants her dead for destroying his lab and branding him a traitor.",
+          "c4": "Supplies him with decryption tools, seeing him as the only hope to expose the truth."
+        }
+      }
+    ],
+    "format": "text",
+    "task_type": "characters"
+  }
+
+
+
+  [
+    {
+        "uid": 115,
+        "score": 0.735,
+        "breakdown": {
+            "technical": 20.0,
+            "structure": 30.0,
+            "content": 10.0,
+            "narrative": 13.5,
+            "total": 0.735,
+            "base_score": 73.5,
+            "model_quality": {
+                "mode_multiplier": 0.01,
+                "model_bonus": 1.0,
+                "penalty": 1.0,
+                "final_multiplier": 0.01
+            },
+            "extensions": {
+                "applied": false,
+                "multiplier": 1.0,
+                "internal_bonus": 0.0
+            },
+            "final_score": 0.735
+        },
+        "timestamp": 1770194480.1902049
+    }
+]

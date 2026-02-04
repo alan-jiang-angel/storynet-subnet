@@ -1,0 +1,67 @@
+{
+    "chapters": [
+      {
+        "id": 1,
+        "content": "The wind howled through the skeletal trees of the Blackfen Marsh, carrying whispers of forgotten names. Elira crouched low beneath a rotting dock, her breath shallow, the scar on her palm throbbing in rhythm with the distant drumbeat of the Hollow Choir. She had evaded the Watchers for three nights, but the map\u2014etched in raven\u2019s ink on wyvern hide\u2014burned against her chest. It was real. The Vault of Echoes existed. And she was close. Above her, on the causeway, iron-shod boots crunched frozen reeds. A torch flared, casting jagged shadows. One of them held a cage with a fluttering, lightless wisp\u2014the soul of a village child. Elira\u2019s fingers curled around the hilt of her bone dagger. She could strike now, free the wisp, and vanish into the mist. Or she could let them pass, preserve her cover, and reach the Vault before dawn. But silence meant complicity. The marsh remembered every betrayal. Somewhere beneath the black water, the Old Names stirred. Her mentor\u2019s voice echoed in her skull: 'Some doors should stay shut, Elira.' Yet if she didn\u2019t act, the Hollow King would rise. And the world would forget how to dream.",
+        "title": "The Blackfen Approach",
+        "choices": [
+          {
+            "id": 1,
+            "text": "Ambush the Watchers and free the caged wisp.",
+            "consequences": {
+              "next_chapter": 2,
+              "character_change": "Elira gains courage but attracts attention; the wisp bonds to her, granting visions but draining her energy."
+            }
+          },
+          {
+            "id": 2,
+            "text": "Remain hidden and allow the Watchers to pass.",
+            "consequences": {
+              "next_chapter": 3,
+              "character_change": "Elira preserves stealth but suffers guilt; the child's soul is lost, and the marsh spirits grow hostile."
+            }
+          },
+          {
+            "id": 3,
+            "text": "Use the bone dagger to carve a sigil in the dock, summoning a marsh spirit for aid.",
+            "consequences": {
+              "next_chapter": 4,
+              "character_change": "Elira gains a temporary ally but risks the spirit turning on her if the ritual fails."
+            }
+          }
+        ]
+      }
+    ],
+    "format": "text",
+    "task_type": "chapters"
+  }
+
+
+
+  [
+    {
+        "uid": 115,
+        "score": 0.67,
+        "breakdown": {
+            "technical": 20.0,
+            "structure": 30.0,
+            "content": 8.0,
+            "narrative": 9.0,
+            "total": 0.67,
+            "base_score": 67.0,
+            "model_quality": {
+                "mode_multiplier": 0.01,
+                "model_bonus": 1.0,
+                "penalty": 1.0,
+                "final_multiplier": 0.01
+            },
+            "extensions": {
+                "applied": false,
+                "multiplier": 1.0,
+                "internal_bonus": 0.0
+            },
+            "final_score": 0.67
+        },
+        "timestamp": 1770194639.4087687
+    }
+]
