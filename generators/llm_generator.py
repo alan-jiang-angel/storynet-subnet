@@ -271,7 +271,7 @@ class LLMGenerator(StoryGenerator):
         random_uuid_or_timestamp = int(time.time())
 
         if (task_type == 'blueprint'):
-            system_prompt = "You are a professional narrative designer for an interactive story game."
+            system_prompt = "You are a professional narrative designer and story architect for an interactive story game."
             content = f"""Given the following user_input, generate a creative, entertaining, and entirely new story blueprint.
             You MUST return a single valid JSON object in exactly the following format and with ALL required fields:
             {{
@@ -298,8 +298,13 @@ class LLMGenerator(StoryGenerator):
             - "themes" must contain **2–5 items**.
             - "format" must be exactly: "text".
             - "task_type" must be exactly: "blueprint".
-            - Use all words from both the "settings" and "core_conflict". The combined total word count of those two fields must exceed 100 words, and the word repetition ratio across them must be below 40%, and and at least one punctuation mark must appear in either "settings" or "core_conflict"
-            - Ensure that words appearing in user_input also appear in at least one of the following fields: "title", "genre", or "settings".
+            - Use all words from both the "settings" and "core_conflict". 
+                The combined total word count of those two fields must exceed 100 words, 
+                and the word repetition ratio across them must be below 40%, 
+                and at least one punctuation mark must appear in either "settings" or "core_conflict"
+            - Ensure that words appearing in user_input also appear in one of the following fields: "title", "genre", or "settings" as much as possible.
+            - Ensure that total number of sentences from "settings" and "core_conflict" is more than 3 
+                and keep the average sentence length to **10-30** words.
 
             ────────────────────────────
             ### NOVELTY & VARIATION REQUIREMENTS
@@ -314,7 +319,6 @@ class LLMGenerator(StoryGenerator):
             - Technology or magic system
             - Social structure
             - Setting scale
-
             - If multiple interpretations of user_input exist, select an unusual but plausible angle.
             - Before writing the final output, internally consider several story concepts and choose the most distinctive one.
             ────────────────────────────
@@ -322,7 +326,7 @@ class LLMGenerator(StoryGenerator):
 
             ${random_uuid_or_timestamp}
 
-            Use the variation seed only to influence creative decisions so that each run produces a substantially different story.
+            Use the variation seed only to influence creative decisions so that each run produces a substantially different story blueprint.
 
             ────────────────────────────
             ### USER INPUT
@@ -372,9 +376,14 @@ class LLMGenerator(StoryGenerator):
                 - "personality_traits" must contain at least 2 items.
                 - "format" must be exactly: "text".
                 - "task_type" must be exactly: "characters".
-                - Use all words from charactors' "background". The combined total word count of those fields must exceed 100 words, and the word repetition ratio across them must be below 40%, and and at least one punctuation mark must appear in charactors' "background"
-                - Ensure that total number of sentences from all characters' background is more than 3 and keep the average sentence length to **10-30** words.
-                - Have some duplicated words between "blueprint" and characters' background
+                
+                - Use all words from charactors' "background". 
+                    The combined total word count of those fields must exceed 100 words, 
+                    and the word repetition ratio across them must be below 40%, 
+                    and at least one punctuation mark must appear in charactors' "background"
+                - Ensure that total number of sentences from all characters' background is more than 3 
+                    and keep the average sentence length to **10-30** words.
+                - Have duplicated words between provided INPUT BLUEPRINT and characters' background as many as possible
 
                 ────────────────────────────
                 ### CREATIVE & NOVELTY REQUIREMENTS
@@ -385,6 +394,13 @@ class LLMGenerator(StoryGenerator):
                 - Each character must differ in worldview, social role, and moral alignment.
                 - At least one relationship must involve rivalry, secrecy, or ideological conflict.
 
+                ────────────────────────────
+                ### VARIATION SEED
+
+                ${random_uuid_or_timestamp}
+
+                Use the variation seed only to influence creative decisions so that each run produces a substantially different story characters.
+            
                 ────────────────────────────
                 ### INPUT BLUEPRINT
 
@@ -456,9 +472,14 @@ class LLMGenerator(StoryGenerator):
                 - Arc descriptions must reflect the actual events in their chapters.
                 - "format" must be exactly: "text".
                 - "task_type" must be exactly: "story_arc".
-                - Use all words from arcs' "description". The combined total word count of those fields must exceed 100 words, and the word repetition ratio across them must be below 40%, and and at least one punctuation mark must appear in arcs' "description"
-                - Ensure that total number of sentences from all arcs' "description" is more than 3 and keep the average sentence length to **10-30** words.
-                - Have some duplicated words between "blueprint" and arcs' description
+                
+                - Use all words from arcs' "description". 
+                    The combined total word count of those fields must exceed 100 words, 
+                    and the word repetition ratio across them must be below 40%, 
+                    and at least one punctuation mark must appear in arcs' "description"
+                - Ensure that total number of sentences from all arcs' "description" is more than 3 
+                    and keep the average sentence length to **10-30** words.
+                - Have duplicated words between given INPUT BLUEPRINT and arcs' description as many as possible
 
                 ────────────────────────────
                 ### STRUCTURAL REQUIREMENTS
@@ -477,6 +498,13 @@ class LLMGenerator(StoryGenerator):
                 - Consequences must permanently change relationships or the world.
                 - Each act must feel tonally distinct while staying consistent with the blueprint.
 
+                ────────────────────────────
+                ### VARIATION SEED
+
+                ${random_uuid_or_timestamp}
+
+                Use the variation seed only to influence creative decisions so that each run produces a substantially different story characters.
+                
                 ────────────────────────────
                 ### USER INPUT
 
@@ -544,9 +572,13 @@ class LLMGenerator(StoryGenerator):
                 - "format" must be exactly: "text".
                 - "task_type" must be exactly: "chapters".
                 
-                - Use all words from chapters' "content". The combined total word count of those fields must exceed 500 words, and the word repetition ratio across them must be below 40%, and and at least one punctuation mark must appear in chapters' "content"
-                - Ensure that total number of sentences from all chapter' "content" is more than 3 and keep the average sentence length to **10-30** words.
-                - Have some duplicated words between "blueprint" and chapter' "content"
+                - Use all words from chapters' "content". 
+                    The combined total word count of those fields must exceed 500 words, 
+                    and the word repetition ratio across them must be below 40%, 
+                    and at least one punctuation mark must appear in chapters' "content"
+                - Ensure that total number of sentences from all chapter' "content" is more than 3 
+                    and keep the average sentence length to **10-30** words.
+                - Have duplicated words between given INPUT BLUEPRINT and chapter' "content" as much as possible
 
                 ────────────────────────────
                 ### NARRATIVE REQUIREMENTS
@@ -569,6 +601,13 @@ class LLMGenerator(StoryGenerator):
                 - At least one choice per chapter should be morally difficult or risky.
                 - Different choices must lead to meaningfully different narrative trajectories.
 
+                ────────────────────────────
+                ### VARIATION SEED
+
+                ${random_uuid_or_timestamp}
+
+                Use the variation seed only to influence creative decisions so that each run produces a substantially different chapter contents.
+                
                 ────────────────────────────
                 ### USER INPUT
 
