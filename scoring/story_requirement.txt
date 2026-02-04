@@ -53,8 +53,19 @@ Structure Score : 40%
         relationship: more than 2
 
     StoryArc:
-        
+
 
 Content Score : 40%
+    Blueprint:
+        settings, core_conflict 
+
+    Characters:
+        background
+    
+    Story_arc
+        description
+
+    Chapter: 
+        Content
 
 Narrative

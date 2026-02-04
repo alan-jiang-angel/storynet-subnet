@@ -282,7 +282,6 @@ class LLMGenerator(StoryGenerator):
                 "themes": ["string"],
                 "tone": "string",
                 "target_audience": "string",
-                "generated_text": "string",
                 "format": "text",
                 "task_type": "blueprint"
             }}
@@ -297,9 +296,10 @@ class LLMGenerator(StoryGenerator):
             - "setting" must be between **50 and 300 characters**.
             - "core_conflict" must be between **20 and 200 characters**.
             - "themes" must contain **2–5 items**.
-            - "generated_text" must be a full narrative blueprint describing the world, premise, stakes, and story direction.
             - "format" must be exactly: "text".
             - "task_type" must be exactly: "blueprint".
+            - Use all words from both the "settings" and "core_conflict". The combined total word count of those two fields must exceed 100 words, and the word repetition ratio across them must be below 40%, and and at least one punctuation mark must appear in either "settings" or "core_conflict"
+            - Ensure that words appearing in user_input also appear in at least one of the following fields: "title", "genre", or "settings".
 
             ────────────────────────────
             ### NOVELTY & VARIATION REQUIREMENTS
@@ -317,11 +317,6 @@ class LLMGenerator(StoryGenerator):
 
             - If multiple interpretations of user_input exist, select an unusual but plausible angle.
             - Before writing the final output, internally consider several story concepts and choose the most distinctive one.
-
-            - Have the word repetitation ratio to less than 40% from settings and core_conflict
-            - Have the word count more than 100 from settings and core_conflict
-            - Have some duplicated words between user_input and title + genre + setting
-
             ────────────────────────────
             ### VARIATION SEED
 
@@ -359,7 +354,6 @@ class LLMGenerator(StoryGenerator):
                             }}
                         }}
                     ],
-                    "generated_text": "string",
                     "format": "text",
                     "task_type": "characters"
                 }}
@@ -378,6 +372,9 @@ class LLMGenerator(StoryGenerator):
                 - "personality_traits" must contain at least 2 items.
                 - "format" must be exactly: "text".
                 - "task_type" must be exactly: "characters".
+                - Use all words from charactors' "background". The combined total word count of those fields must exceed 100 words, and the word repetition ratio across them must be below 40%, and and at least one punctuation mark must appear in charactors' "background"
+                - Ensure that total number of sentences from all characters' background is more than 3 and keep the average sentence length to **10-30** words.
+                - Have some duplicated words between "blueprint" and characters' background
 
                 ────────────────────────────
                 ### CREATIVE & NOVELTY REQUIREMENTS
@@ -387,17 +384,6 @@ class LLMGenerator(StoryGenerator):
                 - No two characters may share the same archetype.
                 - Each character must differ in worldview, social role, and moral alignment.
                 - At least one relationship must involve rivalry, secrecy, or ideological conflict.
-                
-                - Have the word repetitation ratio to less than 40% from all characters' description
-                - Have the word count more than 100 from all characters' description
-                - Keep the total number of sentences more than 3 and keep the average sentence length to **10-30** words
-                
-                - Have some duplicated words betwee blueprint and characters' description
-
-                ────────────────────────────
-                ### GENERATED_TEXT REQUIREMENTS
-
-                - "generated_text" should summarize how the five characters connect and collectively propel the narrative.
 
                 ────────────────────────────
                 ### INPUT BLUEPRINT
@@ -449,7 +435,6 @@ class LLMGenerator(StoryGenerator):
                             "description": "string"
                         }}
                     }},
-                    "generated_text": "string",
                     "format": "text",
                     "task_type": "story_arc"
                 }}
@@ -471,6 +456,9 @@ class LLMGenerator(StoryGenerator):
                 - Arc descriptions must reflect the actual events in their chapters.
                 - "format" must be exactly: "text".
                 - "task_type" must be exactly: "story_arc".
+                - Use all words from arcs' "description". The combined total word count of those fields must exceed 100 words, and the word repetition ratio across them must be below 40%, and and at least one punctuation mark must appear in arcs' "description"
+                - Ensure that total number of sentences from all arcs' "description" is more than 3 and keep the average sentence length to **10-30** words.
+                - Have some duplicated words between "blueprint" and arcs' description
 
                 ────────────────────────────
                 ### STRUCTURAL REQUIREMENTS
@@ -488,17 +476,6 @@ class LLMGenerator(StoryGenerator):
                 - Introduce at least one major surprise in act2b.
                 - Consequences must permanently change relationships or the world.
                 - Each act must feel tonally distinct while staying consistent with the blueprint.
-                
-                - Have the word repetitation ratio to less than 40% from all chapters' description
-                - Have the word count more than 100 from all chapters' description
-                - Keep the total number of sentences more than 3 and keep the average sentence length to **10-30** words
-                
-                - Have some duplicated words between blueprint and description
-
-                ────────────────────────────
-                ### GENERATED_TEXT REQUIREMENTS
-
-                - "generated_text" should summarize the full dramatic trajectory across all four acts.
 
                 ────────────────────────────
                 ### USER INPUT
@@ -550,7 +527,6 @@ class LLMGenerator(StoryGenerator):
                             ]
                         }}
                     ],
-                    "generated_text": "string",
                     "format": "text",
                     "task_type": "chapters"
                 }}
@@ -567,6 +543,10 @@ class LLMGenerator(StoryGenerator):
                 - Choice IDs must be integers starting at 1 within each chapter.
                 - "format" must be exactly: "text".
                 - "task_type" must be exactly: "chapters".
+                
+                - Use all words from chapters' "content". The combined total word count of those fields must exceed 500 words, and the word repetition ratio across them must be below 40%, and and at least one punctuation mark must appear in chapters' "content"
+                - Ensure that total number of sentences from all chapter' "content" is more than 3 and keep the average sentence length to **10-30** words.
+                - Have some duplicated words between "blueprint" and chapter' "content"
 
                 ────────────────────────────
                 ### NARRATIVE REQUIREMENTS
@@ -588,16 +568,6 @@ class LLMGenerator(StoryGenerator):
                 - Avoid repetitive chapter structures.
                 - At least one choice per chapter should be morally difficult or risky.
                 - Different choices must lead to meaningfully different narrative trajectories.
-
-                - Have the word repetitation ratio to less than 40% from content
-                - Have the word count more than 500 from content
-                - Keep the total number of sentences more than 3 and keep the average sentence length to **10-30** words
-                - Have some duplicated words between blueprint and content
-
-                ────────────────────────────
-                ### GENERATED_TEXT REQUIREMENTS
-
-                - "generated_text" should summarize how the chapters work together as an interactive experience and how player agency shapes outcomes.
 
                 ────────────────────────────
                 ### USER INPUT
