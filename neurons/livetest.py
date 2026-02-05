@@ -106,13 +106,13 @@ class TestRunner:
 async def main():
     tester = TestRunner()
 
-    path = "miner_input-02-02.jsonl"
+    path = "reference/miner_input.jsonl"
 
     test_lines = [
-        (31, "blueprint"),
+        (0, "blueprint"),
         (9, "characters"),
-        (7, "story_arc"),
-        (16, "chapters")
+        (10, "story_arc"),
+        (44, "chapters")
     ]
 
     for line_number, expected_task in test_lines:
@@ -140,6 +140,8 @@ async def main():
             raise ValueError(f"Unknown task type: {task_type}")
 
         response = await tester.generate_response(incoming_synapse)
+        print(response)
+        
         content = json.loads(response.get("generated_content", "{}"))
         content["_model_info"] = {"mode": "local", "name": "Qwen/Qwen3-235B-A22B-Instruct-2507-TEE", "version": "", "provider": "vllm", "parameters": {"url": "https://openrouter.ai/api"}}
         
