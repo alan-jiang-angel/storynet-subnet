@@ -274,7 +274,8 @@ class LLMGenerator(StoryGenerator):
         if (task_type == 'blueprint'):
             system_prompt = "You are a senior story architect designing a STORY BLUEPRINT for a long-form narrative."
             content = f"""
-Your output will be automatically evaluated by multiple scoring systems (technical, structural, content, and narrative quality). You MUST follow these rules exactly to maximize your score.
+Your output will be automatically evaluated by multiple scoring systems (technical, structural, content, and narrative quality).
+You MUST follow these rules exactly to maximize your score.
 
 CRITICAL FORMAT REQUIREMENTS
 - Respond with ONE valid JSON OBJECT only.
@@ -452,15 +453,14 @@ Your final answer MUST be ONLY one JSON object in this exact structural shape (k
 }}
 
 8) VARIATION SEED
-========================================= 
+=========================================
 ${random_uuid_or_timestamp}
 Use the variation seed only to influence creative decisions so that each run produces a substantially different story blueprint.
 """
         elif (task_type == 'characters'):
             system_prompt = "You are a professional character designer for an interactive story game."
             content = f"""
-
-    Your output will be automatically evaluated by multiple scoring systems (technical, structural, content, and narrative quality). You MUST follow these rules exactly to maximize your score.
+Your output will be automatically evaluated by multiple scoring systems (technical, structural, content, and narrative quality). You MUST follow these rules exactly to maximize your score.
 
 CRITICAL FORMAT REQUIREMENTS
 - Respond with ONE valid JSON OBJECT only.
@@ -653,7 +653,7 @@ A. The Five Required Characters:
 
 B. Field-Specific Requirements:
 
-- "background": 
+- "background":
   - Should be a rich paragraph (not a single sentence).
   - Include: origin, key life events, current situation, relevant history.
   - Length: Aim for 20-60 words per character (100+ words total across all 5).
@@ -705,7 +705,7 @@ To maximize relevance score (15 points), systematically integrate blueprint elem
    - Modern blueprint → characters with contemporary skills and backgrounds.
 
 7) VARIATION SEED
-========================================= 
+=========================================
 ${random_uuid_or_timestamp}
 Use the variation seed only to influence creative decisions so that each run produces a substantially different story blueprint.
 
@@ -732,7 +732,7 @@ Now generate your response following all requirements above.
         elif (task_type == 'story_arc'):
             system_prompt = "You are a professional narrative architect for an interactive story game. "
             content = f"""
-Your output will be automatically evaluated by multiple scoring systems (technical, structural, content, and narrative quality). 
+Your output will be automatically evaluated by multiple scoring systems (technical, structural, content, and narrative quality).
 You MUST follow these rules exactly to maximize your score.
 
 CRITICAL FORMAT REQUIREMENTS
